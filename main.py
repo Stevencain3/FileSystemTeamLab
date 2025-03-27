@@ -60,14 +60,12 @@ def setup_file_structure():
 # Print full paths from root to files/folders
 def print_paths(node, path=""):
     current_path = f"{path}{node.name}"
-    if node.is_directory and node.children:
-        for child in node.children:
+    if node.is_directory and node.children: #checks if the node is a directory and has children 
+        for child in node.children: # goes through each child and recuseifly goes threw all the children and adds it to the curent path and restarts the process
             print_paths(child, current_path + " > ")
-    else:
+    else: # once there is no more children under neith then it prints out the curnt path 
         print(current_path)
-    if node.next:
-        print_paths(node.next, path)
-
+        
 #testing
 
 fs, root, this_pc, c_drive, docs, d_drive, one = setup_file_structure()

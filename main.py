@@ -7,3 +7,15 @@ class Node:
         self.children = [] if is_directory else None
         self.prev = None
         self.next = None
+
+
+#set up a dubble linked list to have the file structure I want
+class DoubleLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def add_to_directory(self, parent, name, is_directory = True):
+        new_node = Node(name, is_directory)
+        return new_node
+        

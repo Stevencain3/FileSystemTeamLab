@@ -70,7 +70,7 @@ def print_paths(node, path=""):
 
 #testing
 
-fs, root, this_pc, c_drive, docs, d_drive, music = setup_file_structure()
+fs, root, this_pc, c_drive, docs, d_drive, one = setup_file_structure()
 
 print("Initial File System Structure:")
 print_paths(root)

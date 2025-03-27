@@ -57,6 +57,26 @@ def setup_file_structure():
 
 
 
+# Print full paths from root to files/folders
+def print_paths(node, path=""):
+    current_path = f"{path}{node.name}"
+    if node.is_directory and node.children:
+        for child in node.children:
+            print_paths(child, current_path + " > ")
+    else:
+        print(current_path)
+    if node.next:
+        print_paths(node.next, path)
+
+#testing
+
+fs, root, this_pc, c_drive, docs, d_drive, music = setup_file_structure()
+
+print("Initial File System Structure:")
+print_paths(root)
+
+
+
 
 # test cases for what I have so far
 '''

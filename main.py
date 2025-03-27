@@ -59,9 +59,19 @@ def setup_file_structure():
     # sends back all of these things down to main for use
     return fs, root, this_pc, c_drive, docs, d_drive, one 
 
-def write_file(self, file_name, newContent):
-    file_name.content = newContent
-    print(file_name.content)
+def read_file(file):
+    if not file.is_directory:
+        print(f"Reading file '{file.name}': {file.content}")
+        return file.content
+    print(f"'{file.name}' is a directory, not a file.")
+    return None
+
+def write_file(file, newContent):
+    if not file.is_directory:
+        file.content = newContent
+        print(f"File '{file.name}' overwitten with new content.")
+        return
+    print(f"'{file.name}'is a directory, not a file.")
    
 
 

@@ -34,7 +34,20 @@ class DoubleLinkedList:
         return new_node
         
 
+# function for seting up the file sturcture for we dont have to make one up each time we run it
+def setup_file_structure():
+    fs = DoubleLinkedList()
+    root = fs.add_node("Root")
+    this_pc = fs.add_node("This PC")
+    root.children = [this_pc]
 
+    #testing
+    current = fs.head
+    while current:
+        print(current.name)
+        current = current.next
+
+setup_file_structure()
 
 
 # test cases for what I have so far

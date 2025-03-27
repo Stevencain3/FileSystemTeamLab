@@ -51,13 +51,18 @@ def setup_file_structure():
 
     # Sample files
     fileNode = fs.add_to_directory(docs, "readme.txt", is_directory=False)
-    #this would be how you add content(write)  just make a function that we can call to do this
+    #this would be how you add content(write)  just make a function that we can call to do this aswell as specify what node we want to change
     fileNode.content = ("This is the content inside a read me.txt ")
     # print(fileNode.content) // this would be how we print out (read) the content 
     fs.add_to_directory(one, "studentFile.txt", is_directory=False)
   
     # sends back all of these things down to main for use
     return fs, root, this_pc, c_drive, docs, d_drive, one 
+
+def write_file(self, file_name, newContent):
+    file_name.content = newContent
+    print(file_name.content)
+   
 
 
 # Print full paths from root to files/folders
@@ -71,14 +76,19 @@ def print_paths(node, path=""):
         
 #testing
 
-# this is basically giving the main all of these variables for we vcan use them in the main / global scope
+# this is basically giving the main all of these variables for we vcan use them in the main / global scope 
 fs, root, this_pc, c_drive, docs, d_drive, one = setup_file_structure()
 
 print("Initial File System Structure:")
 print_paths(root)
 
-
-
+file_name = input("Enter file name to write to: ")
+newContent = input("Enter new content: ")
+for child in root.children:
+        if child.name == file_name:
+            fs.write_file(child.name, newContent)
+            
+      
 
 # test cases for what I have so far
 '''

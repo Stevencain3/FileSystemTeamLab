@@ -27,8 +27,33 @@ class DoubleLinkedList:
             self.tail = new_node
         return new_node
     
-
+ # creats new file/ folder but adds it into the folders children list
     def add_to_directory(self, parent, name, is_directory = True):
         new_node = Node(name, is_directory)
+        parent.children.append(new_node)
         return new_node
         
+
+
+
+
+# test cases for what I have so far
+'''
+# testing to see if its working the way I want it too
+fs = DoubleLinkedList()
+root_folder = fs.add_node("root", is_directory=True)
+file1 = fs.add_node("readme.txt", is_directory=False)
+folder1 = fs.add_node("Documents", is_directory=True)
+docs = fs.add_to_directory(folder1, "Resume.docx", is_directory=False)
+pics = fs.add_to_directory(folder1, "Photos", is_directory=True)
+
+current = fs.head
+
+# Walk through the file directory and print each folder or files name
+while current:
+    print(current.name)
+    current = current.next
+
+print([child.name for child in folder1.children])  # [Resume.docx, Photos] photos being another directory 
+print(pics.is_directory)                           # True'
+'''

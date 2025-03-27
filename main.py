@@ -41,13 +41,21 @@ def setup_file_structure():
     this_pc = fs.add_node("This PC")
     root.children = [this_pc]
 
-    #testing
-    current = fs.head
-    while current:
-        print(current.name)
-        current = current.next
+      # seting up the Drives under this_pc
+    c_drive = fs.add_to_directory(this_pc, "C Drive")
+    d_drive = fs.add_to_directory(this_pc, "D Drive")
 
-setup_file_structure()
+    # Subfolders under each drive
+    docs = fs.add_to_directory(c_drive, "Documents")
+    one = fs.add_to_directory(d_drive, "OneDrive")
+
+    # Sample files
+    fs.add_to_directory(docs, "readme.txt", is_directory=False)
+    fs.add_to_directory(one, "studentFile.txt", is_directory=False)
+
+    return fs, root, this_pc, c_drive, docs, d_drive, one
+
+
 
 
 # test cases for what I have so far

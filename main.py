@@ -50,11 +50,14 @@ def setup_file_structure():
     one = fs.add_to_directory(d_drive, "OneDrive")
 
     # Sample files
-    fs.add_to_directory(docs, "readme.txt", is_directory=False)
+    fileNode = fs.add_to_directory(docs, "readme.txt", is_directory=False)
+    #this would be how you add content(write)  just make a function that we can call to do this
+    fileNode.content = ("This is the content inside a read me.txt ")
+    # print(fileNode.content) // this would be how we print out (read) the content 
     fs.add_to_directory(one, "studentFile.txt", is_directory=False)
-
-    return fs, root, this_pc, c_drive, docs, d_drive, one
-
+  
+    # sends back all of these things down to main for use
+    return fs, root, this_pc, c_drive, docs, d_drive, one 
 
 
 # Print full paths from root to files/folders
@@ -68,6 +71,7 @@ def print_paths(node, path=""):
         
 #testing
 
+# this is basically giving the main all of these variables for we vcan use them in the main / global scope
 fs, root, this_pc, c_drive, docs, d_drive, one = setup_file_structure()
 
 print("Initial File System Structure:")

@@ -84,6 +84,42 @@ def print_paths(node, path=""):
     else: # once there is no more children under neith then it prints out the curnt path 
         print(current_path)
         
+        
+        
+def remove_node(fs, node):
+        # Handle file removal
+        print(f"Deleting file: {node.name}")
+        # Remove from the parent's children list
+        parent = find_parent(fs.head, node)
+        if parent:
+            parent.children.remove(node)
+        
+        # Remove from linked list
+        if node.prev:
+            node.prev.next = node.next
+        if node.next:
+            node.next.prev = node.prev
+        if node == fs.head:  # If it's the head of the linked list
+            fs.head = node.next
+        if node == fs.tail:  # If it's the tail of the linked list
+            fs.tail = node.prev
+
+        print(f"Successfully deleted: {node.name}")
+
+
+
+
+def find_parent(root, child_node):
+    #Helper function to find the parent of a given node
+    for child in root.children:
+        if child == child_node:
+            return root
+        if child.is_directory:
+            parent = find_parent(child, child_node)
+            if parent:
+                return parent
+    return None
+        
 #testing
 '''
 # this is basically giving the main all of these variables for we vcan use them in the main / global scope 
@@ -177,14 +213,14 @@ def main():
 
         elif choice == '5':
             # Ask for a file/folder to delete
-            file_name = input("Enter file/folder name to delete: ")
+            file_name = input("Enter file name to delete: ")
             file = find_file(root, file_name)
 
             if file:
                 remove_node(fs, file)
-                print(f"File/Folder '{file_name}' deleted.")
+                print(f"File '{file_name}' deleted.")
             else:
-                print(f"File/Folder '{file_name}' not found.")
+                print(f"File '{file_name}' not found.")
 
         elif choice == '6':
             print("Exiting...")
@@ -193,7 +229,7 @@ def main():
             print("Invalid choice, please try again.")
 
 def find_file(node, file_name):
-    """Recursive function to find a file or directory by name"""
+    #Recursive function to find a file or directory by name
     if node.name == file_name:
         return node
     if node.is_directory:
@@ -203,21 +239,7 @@ def find_file(node, file_name):
                 return result
     return None
 
-def remove_node(fs, node_to_remove):
-    """Remove a node (file or directory) from the file system"""
-    if node_to_remove.prev:
-        node_to_remove.prev.next = node_to_remove.next
-    if node_to_remove.next:
-        node_to_remove.next.prev = node_to_remove.prev
-    
-    if fs.head == node_to_remove:
-        fs.head = node_to_remove.next
-    if fs.tail == node_to_remove:
-        fs.tail = node_to_remove.prev
 
-    # Remove from the parent's children if it's a directory
-    if node_to_remove.is_directory and node_to_remove.prev:
-        node_to_remove.prev.children.remove(node_to_remove)
 
 if __name__ == "__main__":
     main()

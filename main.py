@@ -120,3 +120,104 @@ while current:
 print([child.name for child in folder1.children])  # [Resume.docx, Photos] photos being another directory 
 print(pics.is_directory)                           # True'
 '''
+def main():
+    # Initialize the file system structure
+    fs, root, this_pc, c_drive, docs, d_drive, one = setup_file_structure()
+
+    while True:
+        print("\n--- File System ---")
+        print("1. View file system structure")
+        print("2. Read a file")
+        print("3. Write to a file")
+        print("4. Create a new file/folder")
+        print("5. Delete a file/folder")
+        print("6. Exit")
+
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            print("\nFile System Structure:")
+            print_paths(root)
+
+        elif choice == '2':
+            # Ask for a file name to read
+            file_name = input("Enter file name to read: ")
+            file = find_file(root, file_name)
+
+            if file:
+                read_file(file)
+            else:
+                print(f"File '{file_name}' not found.")
+
+        elif choice == '3':
+            # Ask for a file name and new content to write
+            file_name = input("Enter file name to write to: ")
+            new_content = input("Enter new content: ")
+
+            file = find_file(root, file_name)
+
+            if file:
+                write_file(file, new_content)
+            else:
+                print(f"File '{file_name}' not found.")
+
+        elif choice == '4':
+            # Ask to create a new file or folder
+            parent_name = input("Enter parent directory name: ")
+            parent = find_file(root, parent_name)
+
+            if parent and parent.is_directory:
+                new_name = input("Enter the name of the new file/folder: ")
+                is_directory = input("Is this a directory? (y/n): ").lower() == 'y'
+                new_node = fs.add_to_directory(parent, new_name, is_directory)
+
+                print(f"New {'directory' if is_directory else 'file'} '{new_name}' created.")
+            else:
+                print(f"'{parent_name}' is not a valid directory.")
+
+        elif choice == '5':
+            # Ask for a file/folder to delete
+            file_name = input("Enter file/folder name to delete: ")
+            file = find_file(root, file_name)
+
+            if file:
+                remove_node(fs, file)
+                print(f"File/Folder '{file_name}' deleted.")
+            else:
+                print(f"File/Folder '{file_name}' not found.")
+
+        elif choice == '6':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice, please try again.")
+
+def find_file(node, file_name):
+    """Recursive function to find a file or directory by name"""
+    if node.name == file_name:
+        return node
+    if node.is_directory:
+        for child in node.children:
+            result = find_file(child, file_name)
+            if result:
+                return result
+    return None
+
+def remove_node(fs, node_to_remove):
+    """Remove a node (file or directory) from the file system"""
+    if node_to_remove.prev:
+        node_to_remove.prev.next = node_to_remove.next
+    if node_to_remove.next:
+        node_to_remove.next.prev = node_to_remove.prev
+    
+    if fs.head == node_to_remove:
+        fs.head = node_to_remove.next
+    if fs.tail == node_to_remove:
+        fs.tail = node_to_remove.prev
+
+    # Remove from the parent's children if it's a directory
+    if node_to_remove.is_directory and node_to_remove.prev:
+        node_to_remove.prev.children.remove(node_to_remove)
+
+if __name__ == "__main__":
+    main()

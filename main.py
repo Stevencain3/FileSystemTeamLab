@@ -85,7 +85,7 @@ def print_paths(node, path=""):
         print(current_path)
         
 #testing
-
+'''
 # this is basically giving the main all of these variables for we vcan use them in the main / global scope 
 fs, root, this_pc, c_drive, docs, d_drive, one = setup_file_structure()
 
@@ -99,7 +99,7 @@ for child in root.children:
             fs.write_file(child.name, newContent)
             
       
-
+'''
 # test cases for what I have so far
 '''
 # testing to see if its working the way I want it too
